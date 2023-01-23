@@ -23,29 +23,31 @@ Feature: Aprender Cucumber
 	When a entrega atrasar em 2 meses
 	Then a entrega será efetuada em 05/06/2018
 	
-
+	@esse
    Scenario: Deve criar steps genéricos para estes passos
-   Given que o ticket é AF345
-   Given que valor da passagem é R$ 230,45
-   Given que o nome do passageiro é "Fulano da Silva"
-   Given que o telefone do passageiro é 9999-9999
-   When criar os steps
-   Then o teste vai funcionar 
-   
-   Scenario: Deve aproveitar os steps "Dado" do cenário anterior 
-   Given que o ticket é AF345
+   * que o ticket é AF345
+   * que valor da passagem é R$ 230,45
+   * que o nome do passageiro é "Fulano da Silva"
+   * que o telefone do passageiro é 9999-9999
+   * criar os steps
+   * o teste vai funcionar 
+
+   Scenario: Deve reaproveitar os steps "Dado" do cenário anterior
+   Given que o ticket é AB167
    And que o ticket especial é AB167
    And que valor da passagem é R$ 1120,23
-   And que o nome do passageiro é "Eduardo da Silva"
-   And que o telefone do passageiro é 9888-9999
-
-   Scenario: Deve negar todos os steps "Dado" do cenário anterior 
+   When que o nome do passageiro é "Cicrano de Oliveira"
+   Then que o telefone do passageiro é 9888-8888
+   
+   @ignore
+   Scenario: Deve negar todos os steps "Dado" dos cenários anteriores
    Given que o ticket é CD123
-   And que o ticket é AG1234
+   And que o ticket especial é AG1234
    And que valor da passagem é R$ 1.1345,56
-   And que o nome do passageiro é "Ronaldo Nazario Soldanha de Paulo Gueto"
-   And que o telefone do passageiro é 7778-9999
-   And que o telefone do passageiro é 877-9999
+   And que o nome do passageiro é "Beltrano Souza Matos de Alcântara Azevedo"
+   When que o telefone do passageiro é 1234-5678
+   Then que o telefone do passageiro é 999-2223
+   
    
 
 
