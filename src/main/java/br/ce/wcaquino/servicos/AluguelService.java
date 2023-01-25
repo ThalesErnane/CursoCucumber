@@ -20,6 +20,7 @@ public class AluguelService {
 		} else {
 			nota.setPreco(filme.getAluguel());
 			nota.setDataEntrega(DateUtil.obterDataCOmDiferencaDias(1));
+			nota.setPontuacao(1);
 		}
 
 		filme.setEstoque(filme.getEstoque() - 1);

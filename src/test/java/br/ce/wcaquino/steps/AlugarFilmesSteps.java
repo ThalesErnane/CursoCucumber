@@ -60,9 +60,9 @@ public class AlugarFilmesSteps {
 	}
 	
 
-@Given("^que o tipo do aluguel seja estendido$")
-public void que_o_tipo_do_aluguel_seja_estendido() throws Throwable {
-	tipoAluguel = "estendido";
+@Given("^que o tipo do aluguel seja (.*)$")
+public void que_o_tipo_do_aluguel_seja_estendido(String tipo) throws Throwable {
+	tipoAluguel = tipo;
 }
 
 @Then("^a data da entrega será em (\\d+) dias?$")
@@ -74,7 +74,7 @@ public void a_data_da_entrega_será_em_dias(int arg1) throws Throwable {
 	Assert.assertEquals(format.format(dataEsperada),format.format(dataReal));
 }
 
-@Then("^a pontuação recebida será de (\\d+) pontos$")
+@Then("^a pontuação recebida será de (\\d+) pontos?$")
 public void a_pontuação_recebida_será_de_pontos(int arg1) throws Throwable {
 	Assert.assertEquals(arg1, nota.getPontuacao());
 }

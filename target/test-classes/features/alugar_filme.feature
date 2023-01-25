@@ -16,7 +16,19 @@ Feature: Alugar Filme
  		Given um filme com estoque de 0 unidades
  		When alugar
  		Then não será possível por falta de estoque
- 		And o estoque do filme será 0 unidade  
+ 		And o estoque do filme será 0 unidade
+ 		
+ Scenario Outline: Deve dar condições especiais para categoria estendida	
+  	Given um filme com estoque de 2 unidades
+ 		And que o preço do aluguel seja R$ <preco>
+ 		And que o tipo do aluguel seja <tipo>
+ 		When alugar
+ 		Then o preço do aluguel será de R$ <valor>
+ 		And a data da entrega será em <qtdDias> dias 
+ 		And a pontuação recebida será de <pontuacao> pontos   
+ 		
+ 		| preco | tipo      | valor | qtdDias | pontuacao |
+ 		|   4   | estendido |   8   |    3    |     2     | 
  		
  Scenario: Deve dar condições especiais para categoria estendida
  		Given um filme com estoque de 2 unidades
@@ -26,3 +38,12 @@ Feature: Alugar Filme
  		Then o preço do aluguel será de R$ 8
  		And a data da entrega será em 3 dias 
  		And a pontuação recebida será de 2 pontos   
+ 		
+ Scenario: Deve alugar para categoria comum 
+ 		Given um filme com estoque de 2 unidades
+ 		And que o preço do aluguel seja R$ 4
+ 		And que o tipo do aluguel seja comum 
+ 		When alugar
+ 		Then o preço do aluguel será de R$ 4
+ 		And a data da entrega será em 1 dia
+ 		And a pontuação recebida será de 1 ponto  
