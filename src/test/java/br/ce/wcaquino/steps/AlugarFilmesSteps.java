@@ -49,19 +49,6 @@ public class AlugarFilmesSteps {
 		Assert.assertEquals(precoAluguel, nota.getPreco());
 	}
 
-	@And("^e data de entrega será no dia seguinte$")
-	public void eDataDeEntregaSeráNoDiaSeguinte() throws Throwable {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, 1);
-		Date dataRetorno = nota.getDataEntrega();
-		Calendar calRetorno = Calendar.getInstance();
-		calRetorno.setTime(dataRetorno);
-
-		Assert.assertEquals(cal.get(Calendar.DAY_OF_MONTH), calRetorno.get(Calendar.DAY_OF_MONTH));
-		Assert.assertEquals(cal.get(Calendar.MONTH), calRetorno.get(Calendar.MONTH));
-		Assert.assertEquals(cal.get(Calendar.YEAR), calRetorno.get(Calendar.YEAR));
-	}
-
 	@And("^o estoque do filme será (\\d+) unidade$")
 	public void oEstoqueDoFilmeSeráUnidade(int arg1) throws Throwable {
 		Assert.assertEquals(arg1, filme.getEstoque());
@@ -78,9 +65,9 @@ public void que_o_tipo_do_aluguel_seja_estendido() throws Throwable {
 	tipoAluguel = "estendido";
 }
 
-@Then("^a data da entrega será em (\\d+) dias$")
+@Then("^a data da entrega será em (\\d+) dias?$")
 public void a_data_da_entrega_será_em_dias(int arg1) throws Throwable {
-	Date dataEsperada = DateUtil.obterDataCOmDiferencaDias(3);
+	Date dataEsperada = DateUtil.obterDataCOmDiferencaDias(arg1);
 	Date dataReal = nota.getDataEntrega();
 	
 	DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -89,7 +76,7 @@ public void a_data_da_entrega_será_em_dias(int arg1) throws Throwable {
 
 @Then("^a pontuação recebida será de (\\d+) pontos$")
 public void a_pontuação_recebida_será_de_pontos(int arg1) throws Throwable {
-
+	Assert.assertEquals(arg1, nota.getPontuacao());
 }
 
 }
