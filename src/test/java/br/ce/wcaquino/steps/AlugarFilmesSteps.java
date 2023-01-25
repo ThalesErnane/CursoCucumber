@@ -2,13 +2,15 @@ package br.ce.wcaquino.steps;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.NotaAluguel;
+import br.ce.wcaquino.entidades.TipoAluguel;
 import br.ce.wcaquino.servicos.AluguelService;
 import br.ce.wcaquino.utils.DateUtil;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -21,8 +23,8 @@ public class AlugarFilmesSteps {
 	private AluguelService aluguel = new AluguelService();
 	private NotaAluguel nota;
 	private String erro;
-	private String tipoAluguel;
-	
+	private TipoAluguel tipoAluguel;
+
 	@Given("^um filme com estoque de (\\d+) unidades$")
 	public void umFilmeComEstoqueDeUnidades(int arg1) throws Throwable {
 		filme = new Filme();
@@ -32,6 +34,17 @@ public class AlugarFilmesSteps {
 	@And("^que o preço do aluguel seja R\\$ (\\d+)$")
 	public void queOPreçoDoAluguelSejaR$(int arg1) throws Throwable {
 		filme.setAluguel(arg1);
+	}
+
+	@Given("^um filme$")
+	public void um_filme(DataTable table) throws Throwable {
+		Map<String, String> map = table.asMap(String.class, String.class);
+		filme = new Filme();
+		filme.setEstoque(Integer.parseInt(map.get("estoque")));
+		filme.setAluguel(Integer.parseInt(map.get("preco")));
+		String tipo = map.get("tipo");
+		tipoAluguel = tipo.equals("semanal") ? TipoAluguel.SEMANAL
+				: tipo.equals("estendido") ? TipoAluguel.ESTENDIDO : TipoAluguel.COMUM;
 	}
 
 	@When("^alugar$")
@@ -58,25 +71,25 @@ public class AlugarFilmesSteps {
 	public void não_será_possível_por_falta_de_estoque() throws Throwable {
 		Assert.assertEquals("Filme sem estoque!", erro);
 	}
-	
 
-@Given("^que o tipo do aluguel seja (.*)$")
-public void que_o_tipo_do_aluguel_seja_estendido(String tipo) throws Throwable {
-	tipoAluguel = tipo;
-}
+	@Given("^que o tipo do aluguel seja (.*)$")
+	public void que_o_tipo_do_aluguel_seja_estendido(String tipo) throws Throwable {
+		tipoAluguel = tipo.equals("semanal") ? TipoAluguel.SEMANAL
+				: tipo.equals("estendido") ? TipoAluguel.ESTENDIDO : TipoAluguel.COMUM;
+	}
 
-@Then("^a data da entrega será em (\\d+) dias?$")
-public void a_data_da_entrega_será_em_dias(int arg1) throws Throwable {
-	Date dataEsperada = DateUtil.obterDataCOmDiferencaDias(arg1);
-	Date dataReal = nota.getDataEntrega();
-	
-	DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-	Assert.assertEquals(format.format(dataEsperada),format.format(dataReal));
-}
+	@Then("^a data da entrega será em (\\d+) dias?$")
+	public void a_data_da_entrega_será_em_dias(int arg1) throws Throwable {
+		Date dataEsperada = DateUtil.obterDataCOmDiferencaDias(arg1);
+		Date dataReal = nota.getDataEntrega();
 
-@Then("^a pontuação recebida será de (\\d+) pontos?$")
-public void a_pontuação_recebida_será_de_pontos(int arg1) throws Throwable {
-	Assert.assertEquals(arg1, nota.getPontuacao());
-}
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		Assert.assertEquals(format.format(dataEsperada), format.format(dataReal));
+	}
+
+	@Then("^a pontuação recebida será de (\\d+) pontos?$")
+	public void a_pontuação_recebida_será_de_pontos(int arg1) throws Throwable {
+		Assert.assertEquals(arg1, nota.getPontuacao());
+	}
 
 }
