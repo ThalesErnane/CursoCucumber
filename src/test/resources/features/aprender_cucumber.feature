@@ -1,3 +1,4 @@
+@unitários
 Feature: Aprender Cucumber
 	Como um aluno 
 	Eu quero aprender utilizar Cucumber
@@ -23,7 +24,7 @@ Feature: Aprender Cucumber
 	When a entrega atrasar em 2 meses
 	Then a entrega será efetuada em 05/06/2018
 	
-	@esse
+	@tipo1
    Scenario: Deve criar steps genéricos para estes passos
    * que o ticket é AF345
    * que valor da passagem é R$ 230,45

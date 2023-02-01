@@ -6,10 +6,9 @@ import java.util.Date;
 
 import org.junit.Assert;
 
-import cucumber.api.Transform;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class AprenderCucumberSteps {
 
@@ -26,8 +25,6 @@ public class AprenderCucumberSteps {
 	public void aEspecificaçãoDeveFinalizarComSucesso() throws Throwable {
 	}
 
-	// Cenário de Teste 02
-	// -------------------------------------------------------------------------- //
 	private int contador = 0;
 
 	@Given("^que valor do contador é (\\d+)$")
@@ -49,15 +46,11 @@ public class AprenderCucumberSteps {
 		Assert.assertEquals(arg1, contador);
 	}
 
-	// Cenário de Teste 03
-	// ------------------------------------------------------------------------ //
-
 	Date entrega = new Date();
 
-	@Given("^que o prazo é dia (.*)$")
-	public void queOPrazoÉDia(@Transform(br.ce.wcaquino.converters.DateConverter.class) Date data) throws Throwable {
+	@Given("que o prazo é dia {data}")
+	public void queOPrazoÉDia(Date data) throws Throwable {
 		entrega = data;
-		System.out.println("DATA ENTREGA" + entrega);
 	}
 
 	@When("^a entrega atrasar em (\\d+) (dia|dias|mes|meses)$")
@@ -82,8 +75,6 @@ public class AprenderCucumberSteps {
 		Assert.assertEquals(data, dataFormatada);
 	}
 
-	// --------------------------------------------------------------------------------
-	// //
 	@Given("^que o ticket( especial)? é (A.\\d{3})$")
 	public void que_o_ticket_é_AF(String tipo, String arg1) throws Throwable {
 	}
